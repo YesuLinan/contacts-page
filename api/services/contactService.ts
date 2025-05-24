@@ -2,7 +2,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { Contact } from "../../src/Types/types";
 import { v4 as uuidv4 } from "uuid";
 
-const API_BASE = "https://take-home-assessment-6juk.onrender.com";
+const API_BASE = "https://take-home-assessment-6juk.onrender.com/api/contacts";
 
 export async function addContact(contact: Omit<Contact, "id">) {
   console.log("Adding contact:", contact);
