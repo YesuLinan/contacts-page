@@ -6,7 +6,7 @@ router.get("/ping", (req, res) => {
 });
 
 // Create a new contact
-router.post("/", async (req, res) => {
+router.post("/newContact", async (req, res) => {
   try {
     const contactData = req.body;
     const docRef = await req.db.collection("contacts").add(contactData);
@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 });
 
 // Retrieve all contacts
-router.get("/", async (req, res) => {
+router.get("/allContacts", async (req, res) => {
   try {
     const snapshot = await req.db.collection("contacts").get();
     const contacts = snapshot.docs.map((doc) => ({
