@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const multer = require('multer');
+const upload = multer();
+const cloudinary = require('../utils/cloudinary'); // Add this line
 
 router.get("/ping", (req, res) => {
   res.status(200).json({ message: "Pong!" });
