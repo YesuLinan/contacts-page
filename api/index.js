@@ -51,14 +51,27 @@ try {
 }
 
 // Static file serving with path verification
-const staticPath = path.join(__dirname, '../dist');
-console.log('[11] Configuring static assets from:', staticPath);
+// Static file serving configuration
+const staticPath = path.join(__dirname, '../../dist'); // Changed from ../dist
+console.log('[11] Static path:', staticPath);
+
+// Verify directory exists
+const fs = require('fs');
+if (!fs.existsSync(staticPath)) {
+  console.error('[ERROR] Static directory missing:', staticPath);
+  process.exit(1);
+}
+
 app.use(express.static(staticPath));
 
-// Catch-all route with access logging
+// Catch-all route
 app.get('*', (req, res) => {
-  console.log(`[12] Serving index.html for ${req.originalUrl}`);
-  res.sendFile(path.join(staticPath, 'index.html'));
+  const indexPath = path.join(staticPath, 'index.html');
+  if (!fs.existsSync(indexPath)) {
+    console.error('[ERROR] index.html missing at:', indexPath);
+    return res.status(500).send('Server configuration error');
+  }
+  res.sendFile(indexPath);
 });
 
 // Server startup
