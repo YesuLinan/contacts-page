@@ -1,6 +1,5 @@
 const express = require('express');
-const router = express.Router(); 
-
+const router = express.Router();
 
 // Create a new contact
 router.post('/', async (req, res) => {
@@ -24,8 +23,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Retrieve a single contact by ID
-router.get('/:id', async (req, res) => {
+// Retrieve a single contact by ID (updated with regex)
+router.get('/:id(\\w+)', async (req, res) => {
   try {
     const doc = await req.db.collection('contacts').doc(req.params.id).get();
     if (!doc.exists) {
@@ -37,8 +36,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a contact by ID
-router.put('/:id', async (req, res) => {
+// Update a contact by ID (updated with regex)
+router.put('/:id(\\w+)', async (req, res) => {
   try {
     await req.db.collection('contacts').doc(req.params.id).update(req.body);
     res.status(200).json({ message: 'Contact updated successfully' });
@@ -47,8 +46,8 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Delete a contact by ID
-router.delete('/:id', async (req, res) => {
+// Delete a contact by ID (updated with regex)
+router.delete('/:id(\\w+)', async (req, res) => {
   try {
     await req.db.collection('contacts').doc(req.params.id).delete();
     res.status(200).json({ message: 'Contact deleted successfully' });
