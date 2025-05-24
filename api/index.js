@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 admin.initializeApp({
-  credential: admin.credential.cert(GOOGLE_APPLICATION_CREDENTIALS),
+  credential: admin.credential.cert(JSON.parse(GOOGLE_APPLICATION_CREDENTIALS)),
   projectId: GOOGLE_APPLICATION_CREDENTIALS.project_id
 });
 
