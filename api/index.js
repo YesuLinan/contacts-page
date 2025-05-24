@@ -49,18 +49,6 @@ try {
   console.error('[ROUTE LOADING ERROR]', routeError);
   process.exit(1);
 }
-
-// Static file serving with path verification
-const staticPath = path.join(__dirname, '../dist');
-console.log('[11] Configuring static assets from:', staticPath);
-app.use(express.static(staticPath));
-
-// Catch-all route with access logging
-app.get('*', (req, res) => {
-  console.log(`[12] Serving index.html for ${req.originalUrl}`);
-  res.sendFile(path.join(staticPath, 'index.html'));
-});
-
 // Server startup
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
