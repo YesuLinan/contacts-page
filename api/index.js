@@ -52,7 +52,7 @@ try {
 
 // Static file serving with path verification
 // Static file serving configuration
-const staticPath = path.join(__dirname, '../../dist'); // Changed from ../dist
+const staticPath = path.join(__dirname, '../dist');
 console.log('[11] Static path:', staticPath);
 
 // Verify directory exists
