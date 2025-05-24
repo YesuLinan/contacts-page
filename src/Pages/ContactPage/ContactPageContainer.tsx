@@ -3,6 +3,7 @@ import ContactPage from "./ContactPage";
 import { getContacts } from "../../../api/services/contactService";
 import type { Contact } from "../../Types/types";
 import ContactPopupContainer from "../../Components/ContactPopup/ContactPopupContainer";
+//usar axios para hacer la peticion
 
 const ContactPageContainer = () => {
   const [isAddContactOpen, setIsAddContactOpen] = React.useState(false);
