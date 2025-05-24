@@ -1,6 +1,4 @@
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { Contact } from "../../src/Types/types";
-import { v4 as uuidv4 } from "uuid";
 
 const API_BASE = "https://take-home-assessment-6juk.onrender.com/api/contacts";
 
@@ -49,10 +47,20 @@ export async function deleteContact(id: string) {
 }
 
 export async function uploadImage(file: File): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file); // converts to Base64
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = error => reject(error);
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("upload_preset", "unsigned_preset");
+
+  const res = await fetch("https://api.cloudinary.com/v1_1/do1pv1lhq/image/upload", {
+    method: "POST",
+    body: formData,
   });
+  
+
+  if (!res.ok) {
+    throw new Error("Image upload failed");
+  }
+
+  const data = await res.json();
+  return data.url; // Cloudinary image URL
 }

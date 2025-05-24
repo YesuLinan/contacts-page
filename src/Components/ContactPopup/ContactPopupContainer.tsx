@@ -17,14 +17,14 @@ interface ContactPopupContainerProps {
 const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
   contact,
   onClose,
-  onContactAdded
+  onContactAdded,
 }) => {
   const [name, setName] = useState("");
   const [lastContactDate, setlastContactDate] = useState("");
   const [picture, setPicture] = useState<File | null>(null);
 
   const anonymousImage = "/anonymous.jpg";
-   
+
   // Pre-fill values if editing
   useEffect(() => {
     if (contact) {
@@ -35,7 +35,7 @@ const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
 
   const isEditMode = !!contact;
 
- const handleSubmit = async () => {
+  const handleSubmit = async () => {
     if (!name.trim()) {
       alert("Name cannot be empty.");
       return;
@@ -46,15 +46,17 @@ const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
     }
 
     try {
-      let pictureUrl: string | undefined = typeof contact?.picture === "string" ? contact.picture : undefined;
+      let pictureUrl: string | undefined;
 
-      console.log("Picture type:", typeof picture);
-      if (picture instanceof File) {
-        pictureUrl = await uploadImage(picture);
-      } else if (!pictureUrl) {
-        pictureUrl = anonymousImage; // fallback here
+      // If editing and picture is already a URL, retain it
+      if (contact && typeof contact.picture === "string" && !picture) {
+        pictureUrl = contact.picture;
+      } else if (picture instanceof File) {
+        pictureUrl = await uploadImage(picture); // Cloudinary upload
+      } else {
+        alert("You must upload a picture.");
+        return;
       }
-      console.log("Picture URL:", pictureUrl);
 
       const contactToSubmit: Omit<Contact, "id"> = {
         name,
@@ -68,24 +70,25 @@ const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
         await addContact(contactToSubmit);
       }
 
-      onContactAdded && await onContactAdded();
+      onContactAdded && (await onContactAdded());
       onClose();
     } catch (error) {
       console.error("Error submitting contact:", error);
+      alert("There was an error saving the contact.");
     }
   };
 
   const handleDelete = async () => {
-    if (contact) { 
+    if (contact) {
       try {
         await deleteContact(contact.id);
-        onContactAdded && await onContactAdded();
+        onContactAdded && (await onContactAdded());
         onClose();
       } catch (error) {
         console.error("Error deleting contact:", error);
       }
     }
-  }
+  };
 
   return (
     <ContactPopup

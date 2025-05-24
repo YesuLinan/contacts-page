@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 firebase-service-account.json
 .env
-.vercel
 .env*.local

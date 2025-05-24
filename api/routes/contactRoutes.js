@@ -16,6 +16,17 @@ router.post("/newContact", async (req, res) => {
   }
 });
 
+router.post("/upload", upload.single("image"), async (req, res) => {
+  try {
+    const fileStr = req.file.buffer.toString('base64');
+    const uploadedResponse = await cloudinary.uploader.upload(`data:image/jpeg;base64,${fileStr}`);
+    res.status(200).json({ url: uploadedResponse.secure_url });
+  } catch (err) {
+    console.error("Upload Error:", err);
+    res.status(500).json({ error: "Image upload failed" });
+  }
+});
+
 // Retrieve all contacts
 router.get("/allContacts", async (req, res) => {
   try {
