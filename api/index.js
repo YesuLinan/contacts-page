@@ -5,15 +5,15 @@ const path = require('path');
 const contactRoutes = require('./routes/contactRoutes');
 //const serviceAccount = require('./firebase-service-account.json');
 
-const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+const firebaseConfig = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 admin.initializeApp({
-  credential: admin.credential.cert(JSON.parse(GOOGLE_APPLICATION_CREDENTIALS)),
-  projectId: GOOGLE_APPLICATION_CREDENTIALS.project_id
+  credential: admin.credential.cert(firebaseConfig),
+  projectId: firebaseConfig.project_id
 });
 
 const db = admin.firestore();
