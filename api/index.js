@@ -2,16 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
 const contactRoutes = require('./routes/contactRoutes');
-const serviceAccount = require('./firebase-service-account.json');
+//const serviceAccount = require('./firebase-service-account.json');
 
-
+const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  projectId: serviceAccount.project_id
+  credential: admin.credential.cert(GOOGLE_APPLICATION_CREDENTIALS),
+  projectId: GOOGLE_APPLICATION_CREDENTIALS.project_id
 });
 
 
