@@ -23,7 +23,7 @@ const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
   const [lastContactDate, setlastContactDate] = useState("");
   const [picture, setPicture] = useState<File | null>(null);
 
-  const anonymousImage = "/pictures/anonymous.jpg";
+  const anonymousImage = "/anonymous.jpg";
    
   // Pre-fill values if editing
   useEffect(() => {
