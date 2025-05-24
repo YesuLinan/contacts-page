@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ContactPopup from "./ContactPopup";
 import type { Contact } from "../../Types/types";
-import anonymousImage from "../../assets/pictures/anonymous.jpg";
 import {
   addContact,
   deleteContact,
@@ -24,6 +23,8 @@ const ContactPopupContainer: React.FC<ContactPopupContainerProps> = ({
   const [lastContactDate, setlastContactDate] = useState("");
   const [picture, setPicture] = useState<File | null>(null);
 
+  const anonymousImage = "/pictures/anonymous.jpg";
+   
   // Pre-fill values if editing
   useEffect(() => {
     if (contact) {
