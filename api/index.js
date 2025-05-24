@@ -13,7 +13,7 @@ app.use(express.json());
 
 admin.initializeApp({
   credential: admin.credential.cert(JSON.parse(GOOGLE_APPLICATION_CREDENTIALS)),
-  projectId: JSON.parse(GOOGLE_APPLICATION_CREDENTIALS).project_id
+  projectId: GOOGLE_APPLICATION_CREDENTIALS.project_id
 });
 
 const db = admin.firestore();
