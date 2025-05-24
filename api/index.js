@@ -30,3 +30,12 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+router.get('/inping', async (req, res) => {
+  try {
+    res.status(200).json("succ");
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
