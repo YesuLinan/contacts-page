@@ -57,12 +57,4 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/ping', async (req, res) => {
-  try {
-    res.status(200).json("succ");
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 module.exports = router;

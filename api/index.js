@@ -27,13 +27,11 @@ app.use((req, res, next) => {
 // Backend API routes
 app.use('/api/contacts', contactRoutes);
 
-// Serve React frontend build files
-app.use(express.static(path.join(__dirname, '../src/build')));
-
-// For any other routes, serve React's index.html (for client-side routing)
+app.use(express.static(path.join(__dirname, '../dist')));
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../src/build', 'index.html'));
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
