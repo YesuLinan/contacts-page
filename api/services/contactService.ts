@@ -6,7 +6,7 @@ const API_BASE = "https://take-home-assessment-6juk.onrender.com/api/contacts";
 
 export async function addContact(contact: Omit<Contact, "id">) {
   console.log("Adding contact:", contact);
-  const res = await fetch(API_BASE + '/addContact', {
+  const res = await fetch(API_BASE + '/newContact', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(contact),
