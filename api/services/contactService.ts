@@ -6,7 +6,7 @@ const API_BASE = "https://take-home-assessment-6juk.onrender.com";
 
 export async function addContact(contact: Omit<Contact, "id">) {
   console.log("Adding contact:", contact);
-  const res = await fetch(API_BASE, {
+  const res = await fetch(API_BASE + '/addContact', {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(contact),
@@ -26,7 +26,7 @@ export async function updateContact(contact: Contact) {
 
 export async function getContacts(): Promise<Contact[]> {
   console.log("Fetching contacts...");
-  const res = await fetch(API_BASE);
+  const res = await fetch(API_BASE+ '/allContacts');
   if (!res.ok) {
     throw new Error(`Failed to fetch contacts: ${res.statusText}`);
   }
