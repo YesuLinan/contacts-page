@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require('multer');
 const upload = multer();
-const cloudinary = require('../utils/cloudinary'); // Add this line
+const cloudinary = require('../utils/cloudinary');
 
 router.get("/ping", (req, res) => {
   res.status(200).json({ message: "Pong!" });
@@ -21,12 +21,13 @@ router.post("/newContact", async (req, res) => {
 
 router.post("/upload", upload.single("image"), async (req, res) => {
   try {
-    const fileStr = req.file.buffer.toString('base64');
-    const uploadedResponse = await cloudinary.uploader.upload(`data:image/jpeg;base64,${fileStr}`);
-    res.status(200).json({ url: uploadedResponse.secure_url });
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      upload_preset: "ml_default"
+    });
+    res.status(200).json({ url: result.secure_url });
   } catch (err) {
     console.error("Upload Error:", err);
-    res.status(500).json({ error: "Image upload failed" });
+    res.status(500).json({ error: err.message });
   }
 });
 
